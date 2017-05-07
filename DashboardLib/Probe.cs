@@ -25,6 +25,9 @@ namespace DashboardLib
         [XmlElement("LastTimestamp")]
         public DateTime LastTimestamp { get; set; }
 
+        [XmlElement("LastMessage")]
+        public string LastMessage { get; set; }
+
         [XmlElement("MinValue")]
         public double? MinValue { get; set; }
 
@@ -35,7 +38,13 @@ namespace DashboardLib
         public double? LastValue { get; set; }
 
         [XmlElement("History")]
-        public List<DashboardLib.HistoryItem> History { get; set; }
+        public List<HistoryItem> History { get; set; }
+
+        [XmlElement("CommonName")]
+        public string CommonName { get; set; }
+
+        [XmlElement("SizeType")]
+        public SizeTypeEnum SizeType;
 
         public string ProbeName
         {
@@ -67,6 +76,7 @@ namespace DashboardLib
             Name = "";
             LastState = TraceEventType.Critical;
             History = new List<DashboardLib.HistoryItem>();
+            LastMessage = "";
         }
 
         public static Probe FromTraceEvent(XmlDocument xml)
@@ -80,8 +90,9 @@ namespace DashboardLib
                 Name = traceNode.SelectSingleNode("Source").InnerText,
                 LastState = type,
                 LastTimestamp = DateTime.Parse(traceNode.SelectSingleNode("Timestamp").InnerText),
+                LastMessage = traceNode.SelectSingleNode("Message").InnerText,
             };
-            
+
             if (traceNode.SelectSingleNode("Value") != null && traceNode.SelectSingleNode("Value").InnerText.Trim() != "")
             {
                 probe.LastValue = Double.Parse(traceNode.SelectSingleNode("Value").InnerText);
@@ -121,11 +132,19 @@ namespace DashboardLib
                 LastState = LastState,
                 Name = Name,
                 Machine = Machine,
+                LastMessage = LastMessage,
                 LastTimestamp = LastTimestamp,
                 LastValue = LastValue,
                 MaxValue = MaxValue,
-                MinValue = MinValue
+                MinValue = MinValue,
+                CommonName = CommonName,
+                SizeType = SizeType
             };
+        }
+
+        public string TryCommonName()
+        {
+            return String.IsNullOrWhiteSpace(CommonName) ? ProbeName : CommonName;
         }
 
         public void CompressHistory()
@@ -163,7 +182,7 @@ namespace DashboardLib
 
         private void Compress(HistoryItem.Aggregations mode, IEnumerable<HistoryItem> items)
         {
-            if(items.Count() == 0)
+            if (items.Count() == 0)
             {
                 return;
             }
@@ -174,7 +193,7 @@ namespace DashboardLib
             if (mode == HistoryItem.Aggregations.Daily) newTimeStamp = newTimeStamp.AddHours(-newTimeStamp.Hour);
 
             // Skip the rest if this aggregation already exists
-            if(History.Exists(x => x.Aggregation == mode && x.Timestamp == newTimeStamp))
+            if (History.Exists(x => x.Aggregation == mode && x.Timestamp == newTimeStamp))
             {
                 return;
             }
@@ -206,5 +225,7 @@ namespace DashboardLib
             };
             History.Add(compressedSet);
         }
+
+        public enum SizeTypeEnum { None, Bytes, Percent }
     }
 }

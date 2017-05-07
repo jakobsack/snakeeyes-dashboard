@@ -162,7 +162,14 @@ namespace DashboardServer
             }
             else if (request.Type == Request.Types.History)
             {
-                response.Probes = new List<Probe> { Probes[request.ProbeName] };
+                response.Probes = new List<Probe> { Probes[request.ProbeId] };
+            }
+            else if (request.Type == Request.Types.Edit)
+            {
+                Probe probe = Probes[request.ProbeId];
+                probe.CommonName = request.CommonName;
+                probe.SizeType = request.SizeType;
+                response.Probes = new List<Probe> { probe };
             }
 
             MsmqHelper.Write(MsmqHelper.ResponseQueueName, response.ToXml());

@@ -39,13 +39,12 @@ namespace DashboardLib
 
         public static string Read(string queueName)
         {
-            string content = null;
+            Message requestMessage = null;
 
             using (MessageQueue queue = new MessageQueue(queueName))
             {
                 queue.Formatter = Formatter;
 
-                Message requestMessage = null;
                 try
                 {
                     //queue.BeginPeek(timeout);
@@ -55,29 +54,42 @@ namespace DashboardLib
                 {
                     return null;
                 }
+            }
+
+            return ReadMessageContent(requestMessage);
+        }
+
+        public static string Read(string queueName, Func<string, bool> tester)
+        {
+            Message requestMessage = null;
+
+            using (MessageQueue queue = new MessageQueue(queueName))
+            {
+                queue.Formatter = Formatter;
 
                 try
                 {
-                    content = (string)requestMessage.Body;
+                    using (MessageEnumerator enumerator = queue.GetMessageEnumerator2())
+                    {
+                        while (enumerator.MoveNext())
+                        {
+                            Message peekMessage = queue.PeekById(enumerator.Current.Id);
+
+                            if (tester(peekMessage.Body.ToString()))
+                            {
+                                requestMessage = queue.ReceiveById(enumerator.Current.Id, Timeout, MessageQueueTransactionType.Single);
+                                break;
+                            }
+                        }
+                    }
                 }
-                catch (Exception exc1)
+                catch (Exception)
                 {
-                    try
-                    {
-                        requestMessage.Formatter = Formatter;
-                        StreamReader reader = new StreamReader(requestMessage.BodyStream);
-                        content = reader.ReadToEnd();
-                    }
-                    catch (Exception exc2)
-                    {
-                        Log.Error(exc1.ToString());
-                        Log.Error(exc2.ToString());
-                        return null;
-                    }
+                    return null;
                 }
             }
 
-            return content;
+            return ReadMessageContent(requestMessage);
         }
 
         public static void Write(string queueName, string content)
@@ -92,6 +104,34 @@ namespace DashboardLib
                 };
                 queue.Send(message, MessageQueueTransactionType.Single);// The last part is required for transactional queues, not testet for non-transactional.
             }
+        }
+
+        private static string ReadMessageContent(Message message)
+        {
+            string content = null;
+
+            try
+            {
+                content = (string)message.Body;
+            }
+            catch (Exception exc1)
+            {
+                try
+                {
+                    message.Formatter = Formatter;
+                    StreamReader reader = new StreamReader(message.BodyStream);
+                    content = reader.ReadToEnd();
+                }
+                catch (Exception exc2)
+                {
+                    Log.Error(exc1.ToString());
+                    Log.Error(exc2.ToString());
+                    return null;
+                }
+            }
+
+            return content;
+
         }
     }
 }

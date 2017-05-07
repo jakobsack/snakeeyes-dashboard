@@ -27,6 +27,7 @@ namespace DashboardClient
             Probes = new List<Probe>();
             InitializeComponent();
             UpdateData();
+            comboBoxType.DataSource = Enum.GetValues(typeof(Probe.SizeTypeEnum));
         }
 
         public void UpdateData()
@@ -37,22 +38,18 @@ namespace DashboardClient
             };
             Response response = RequestData(request);
 
-            ClearOverview();
-
             Probes = response.Probes;
             Probes.Sort(CompareProbes);
-            foreach (Probe probe in Probes)
-            {
-                AddOverviewItem(probe);
-            }
 
-            if(ActiveProbe != null)
+            UpdateOverviewPanel();
+
+            if (ActiveProbe != null)
             {
                 IEnumerable<Probe> newActive = Probes.Where(x => x.Machine == ActiveProbe.Machine && x.Name == ActiveProbe.Name);
                 if (newActive.Count() == 1)
                 {
                     ActiveProbe = newActive.First();
-                    UpdateHistory(ActiveProbe);
+                    ShowProbe(ActiveProbe);
                 }
                 else
                 {
@@ -70,6 +67,7 @@ namespace DashboardClient
                 ClearChart(chartDaily);
                 dataGridViewHistory.Rows.Clear();
             }
+
         }
 
         private void probePanel_Click(object sender, EventArgs e)
@@ -88,19 +86,56 @@ namespace DashboardClient
                 throw new Exception(String.Format("Don't nkow how to handle sender type {0}", sender.GetType()));
             }
 
-            UpdateHistory(panel.ThisProbe);
+            ShowProbe(panel.ThisProbe);
         }
 
-        private void UpdateHistory(Probe probe)
+        private void ShowProbe(Probe probe)
         {
             Request request = new Request()
             {
                 Type = Request.Types.History,
-                ProbeName = probe.Id
+                ProbeId = probe.Id
             };
             Response response = RequestData(request);
 
-            if (response.Probes[0].History.Count == 0)
+            Probe data = response.Probes[0];
+
+            foreach (Control p in flowLayoutPanelOverview.Controls)
+            {
+                if (p.GetType() != typeof(ProbePanel))
+                {
+                    continue;
+                }
+
+                ProbePanel pp = (ProbePanel)p;
+                if (ActiveProbe != null && pp.ThisProbe.Id == ActiveProbe.Id)
+                {
+                    pp.BackColor = SystemColors.Control;
+                }
+                if (pp.ThisProbe.Id == data.Id)
+                {
+                    pp.BackColor = SystemColors.ActiveCaption;
+                }
+            }
+            ActiveProbe = data;
+
+            // Set the data in the details panel
+            labelMachine.Text = data.Machine;
+            labelProbeName.Text = data.ProbeName;
+            labelProbeType.Text = data.ProbeType;
+            labelMaxValue.Text = data.MaxValue.ToString();
+            labelLastValue.Text = data.LastValue.ToString();
+            labelMinValue.Text = data.MinValue.ToString();
+            labelLastTimestamp.Text = data.LastTimestamp.ToString();
+            labelLastState.Text = data.LastState.ToString();
+            labelHistoryItems.Text = data.History.Count.ToString();
+            labelLastMessage.Text = "";
+
+            textBoxCommonName.Text = probe.TryCommonName();
+            comboBoxType.SelectedItem = probe.SizeType;
+
+
+            if (data.History.Count == 0)
             {
                 ClearChart(chartCurrent);
                 ClearChart(chartHourly);
@@ -227,13 +262,33 @@ namespace DashboardClient
         {
             MsmqHelper.Write(MsmqHelper.RequestQueueName, request.ToXml());
 
+            XmlSerializer ser = new XmlSerializer(typeof(Response));
+
+            // The function we use to determine if a request is for us
+            Func<string, bool> tester = (x) =>
+            {
+                if (x.Contains(request.Id))
+                {
+                    try
+                    {
+                        Response tempResponse = (Response)ser.Deserialize(new StringReader(x));
+                        return tempResponse.Id == request.Id;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+                return false;
+            };
+
+            // Read the message
             Response response = null;
             while (response == null)
             {
-                string inMessage = MsmqHelper.Read(MsmqHelper.ResponseQueueName);
+                string inMessage = MsmqHelper.Read(MsmqHelper.ResponseQueueName, tester);
                 if (inMessage != null)
                 {
-                    XmlSerializer ser = new XmlSerializer(typeof(Response));
                     response = (Response)ser.Deserialize(new StringReader(inMessage));
                 }
             }
@@ -244,37 +299,55 @@ namespace DashboardClient
         {
         }
 
+        private void UpdateOverviewPanel()
+        {
+            ClearOverview();
+
+            string lastMachine = "";
+            foreach (Probe probe in Probes.Where(x => (x.Id + x.CommonName).Contains(textBoxFilter.Text)))
+            {
+                if (probe.LastState >= TraceEventType.Information && probe.Machine != lastMachine)
+                {
+                    AddHeaderItem(probe.Machine);
+                    lastMachine = probe.Machine;
+                }
+                AddOverviewItem(probe);
+            }
+        }
+
         private void ClearOverview()
         {
             flowLayoutPanelOverview.Controls.Clear();
             OverviewPanels.Clear();
         }
 
-        private void AddOverviewItem(Probe probe)
+        private void AddHeaderItem(string name)
         {
-            ProbePanel panel = new ProbePanel(probe);
-            panel.Width = 150;
-            panel.Height = 150;
-            panel.BackColor = GetPanelColor(probe);
-            panel.RegisterClick(new System.EventHandler(this.probePanel_Click));
+            Panel panel = new Panel()
+            {
+                Width = 200,
+                Height = 20
+            };
+            panel.Controls.Add(new Label
+            {
+                Text = name,
+                Width = panel.Width - 10,
+                Height = 14,
+                Top = 5,
+                Left = 5,
+                AutoEllipsis = true,
+                TextAlign = ContentAlignment.TopCenter
+            });
 
             flowLayoutPanelOverview.Controls.Add(panel);
         }
 
-        private Color GetPanelColor(Probe probe)
+        private void AddOverviewItem(Probe probe)
         {
-            if (probe.LastState == TraceEventType.Critical || probe.LastState == TraceEventType.Error)
-            {
-                return Color.PaleVioletRed;
-            }
-            else if (probe.LastState == TraceEventType.Warning)
-            {
-                return Color.LightYellow;
-            }
-            else
-            {
-                return Color.LightBlue;
-            }
+            ProbePanel panel = new ProbePanel(probe);
+            panel.RegisterClick(new System.EventHandler(this.probePanel_Click));
+
+            flowLayoutPanelOverview.Controls.Add(panel);
         }
 
         private int CompareProbes(Probe a, Probe b)
@@ -295,6 +368,82 @@ namespace DashboardClient
             {
                 return a.ProbeName.CompareTo(b.ProbeName);
             }
+        }
+
+        private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
+        {
+            int sectionWidth = splitContainer1.Panel1.Width / 6;
+
+            labelTextMachine.Top = 3;
+            labelTextMachine.Left = sectionWidth - labelTextMachine.Width;
+            labelMachine.Top = 3;
+            labelMachine.Left = sectionWidth;
+
+            labelTextProbeName.Top = 16;
+            labelTextProbeName.Left = sectionWidth - labelTextProbeName.Width;
+            labelProbeName.Top = 16;
+            labelProbeName.Left = sectionWidth;
+
+            labelTextProbeType.Top = 29;
+            labelTextProbeType.Left = sectionWidth - labelTextProbeType.Width;
+            labelProbeType.Top = 29;
+            labelProbeType.Left = sectionWidth;
+
+            labelTextLastState.Top = 3;
+            labelTextLastState.Left = 4 * sectionWidth - labelTextLastState.Width;
+            labelLastState.Top = 3;
+            labelLastState.Left = 4 * sectionWidth;
+
+            labelTextMaxValue.Top = 16;
+            labelTextMaxValue.Left = 4 * sectionWidth - labelTextMaxValue.Width;
+            labelMaxValue.Top = 16;
+            labelMaxValue.Left = 4 * sectionWidth;
+
+            labelTextLastValue.Top = 29;
+            labelTextLastValue.Left = 4 * sectionWidth - labelTextLastValue.Width;
+            labelLastValue.Top = 29;
+            labelLastValue.Left = 4 * sectionWidth;
+
+            labelTextMinValue.Top = 42;
+            labelTextMinValue.Left = 4 * sectionWidth - labelTextMinValue.Width;
+            labelMinValue.Top = 42;
+            labelMinValue.Left = 4 * sectionWidth;
+
+            labelTextHistoryItems.Top = 68;
+            labelTextHistoryItems.Left = 4 * sectionWidth - labelTextHistoryItems.Width;
+            labelHistoryItems.Top = 68;
+            labelHistoryItems.Left = 4 * sectionWidth;
+
+            labelTextLastUpdate.Top = 68;
+            labelTextLastUpdate.Left = sectionWidth - labelTextLastUpdate.Width;
+            labelLastTimestamp.Top = 68;
+            labelLastTimestamp.Left = sectionWidth;
+
+            labelTextLastMessage.Left = 3;
+            labelTextLastMessage.Top = 94;
+            labelLastMessage.Left = 3;
+            labelLastMessage.Top = 107;
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            Enum.TryParse(comboBoxType.SelectedValue.ToString(), out Probe.SizeTypeEnum status);
+
+            Request request = new Request
+            {
+                Type = Request.Types.Edit,
+                ProbeId = ActiveProbe.Id,
+                CommonName = textBoxCommonName.Text,
+                SizeType = status
+            };
+
+            Response response = RequestData(request);
+            UpdateData();
+        }
+
+        private void textBoxFilter_TextChanged(object sender, EventArgs e)
+        {
+            UpdateOverviewPanel();
         }
     }
 }

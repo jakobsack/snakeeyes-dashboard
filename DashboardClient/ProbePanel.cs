@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DashboardLib;
+using System.Diagnostics;
 
 namespace DashboardClient
 {
@@ -20,87 +21,48 @@ namespace DashboardClient
             InitializeComponent();
             ThisProbe = probe;
 
-            Controls.Add(new Label
-            {
-                Text = String.Format("M: {0}", probe.Machine),
-                Width = Width - 10,
-                Height = 14,
-                Top = 5,
-                Left = 5
-            });
-            Controls.Add(new Label
-            {
-                Text = String.Format("N: {0}", probe.ProbeName),
-                Width = Width - 10,
-                Height = 14,
-                Top = 20,
-                Left = 5
-            });
-            Controls.Add(new Label
-            {
-                Text = String.Format("T: {0}", probe.ProbeType),
-                Width = Width - 10,
-                Height = 14,
-                Top = 35,
-                Left = 5
-            });
-            Controls.Add(new Label
-            {
-                Text = String.Format("S: {0}", probe.LastState),
-                Width = Width - 10,
-                Height = 14,
-                Top = 50,
-                Left = 5
-            });
+            Width = 200;
+            Height = 20;
 
             Controls.Add(new Label
             {
-                Text = String.Format("D: {0}", probe.LastTimestamp),
-                Width = Width - 10,
+                Text = probe.TryCommonName(),
+                Width = Width - 9,
                 Height = 14,
-                Top = 70,
-                Left = 5
+                Top = 3,
+                Left = 6
             });
 
-            if (probe.MaxValue.HasValue)
+            Controls.Add(new Panel
             {
-                Controls.Add(new Label
-                {
-                    Text = String.Format("< {0}", probe.MaxValue.Value),
-                    Width = Width - 10,
-                    Height = 14,
-                    Top = 100,
-                    Left = 5,
-                    
-                });
-            }
-            Controls.Add(new Label
-            {
-                Text = String.Format("= {0}", probe.LastValue.Value),
-                Width = Width - 10,
-                Height = 14,
-                Top = 115,
-                Left = 5
+                Dock = DockStyle.Left,
+                BackColor = GetPanelColor(probe),
+                Width = 3
             });
-            if (probe.MinValue.HasValue)
-            {
-                Controls.Add(new Label
-                {
-                    Text = String.Format("> {0}", probe.MinValue.Value),
-                    Width = Width - 10,
-                    Height = 14,
-                    Top = 130,
-                    Left = 5
-                });
-            }
         }
 
         public void RegisterClick(EventHandler eventhandler)
         {
             Click += eventhandler;
-            foreach(Control control in Controls)
+            foreach (Control control in Controls)
             {
                 control.Click += eventhandler;
+            }
+        }
+
+        private Color GetPanelColor(Probe probe)
+        {
+            if (probe.LastState == TraceEventType.Critical || probe.LastState == TraceEventType.Error)
+            {
+                return Color.PaleVioletRed;
+            }
+            else if (probe.LastState == TraceEventType.Warning)
+            {
+                return Color.LightYellow;
+            }
+            else
+            {
+                return Color.LightBlue;
             }
         }
     }

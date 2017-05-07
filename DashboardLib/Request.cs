@@ -18,11 +18,21 @@ namespace DashboardLib
         public Types Type;
 
         [XmlElement("Probe")]
-        public string ProbeName { get; set; }
+        public string ProbeId { get; set; }
+
+        [XmlElement("CommonName")]
+        public string CommonName { get; set; }
+
+        [XmlElement("SizeType")]
+        public Probe.SizeTypeEnum SizeType { get; set; }
 
         public Request()
         {
             Id = Guid.NewGuid().ToString();
+            Type = Types.Probes;
+            ProbeId = "";
+            CommonName = "";
+            SizeType = Probe.SizeTypeEnum.None;
         }
 
         public string ToXml()
@@ -35,6 +45,6 @@ namespace DashboardLib
             }
         }
 
-        public enum Types { Probes, History };
+        public enum Types { Probes, History, Edit };
     }
 }
