@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -14,14 +12,21 @@ namespace DashboardServer
     class Worker
     {
         // TODO: move these values to settings?
-        private static string DataDirectory = @"Data";
-        private static string BackupDirectory = @"Backup";
+        private static string DataDirectory = null;
+        private static string BackupDirectory = null;
 
         private static Dictionary<string, Probe> Probes = new Dictionary<string, Probe>();
 
         public static void Run(ManualResetEvent shutdownEvent)
         {
+            Log.Flow("Worker thread says hello");
             DateTime lastCompression = DateTime.MinValue;
+
+            DataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            BackupDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backup");
+
+            Log.Flow(String.Format("Data will be saved in  {0}", DataDirectory));
+            Log.Flow(String.Format("Backups will be saved in {0}", BackupDirectory));
 
             // Create our queues
             MsmqHelper.CreateQueue(MsmqHelper.InboxQueueName);
@@ -90,7 +95,7 @@ namespace DashboardServer
                 // Compress data
                 try
                 {
-                    if ((DateTime.Now - lastCompression).TotalSeconds > 900)
+                    if ((DateTime.Now - lastCompression).TotalSeconds > 3600)
                     {
                         foreach (Probe probe in Probes.Values)
                         {
