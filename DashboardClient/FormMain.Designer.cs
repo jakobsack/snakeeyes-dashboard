@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.labelTextLastUpdate = new System.Windows.Forms.Label();
@@ -73,15 +73,15 @@
             this.ColumnAvg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnAggregation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPageEdit = new System.Windows.Forms.TabPage();
+            this.buttonSave = new System.Windows.Forms.Button();
+            this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.textBoxCommonName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanelOverview = new System.Windows.Forms.FlowLayoutPanel();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.tabPageEdit = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxCommonName = new System.Windows.Forms.TextBox();
-            this.comboBoxType = new System.Windows.Forms.ComboBox();
-            this.buttonSave = new System.Windows.Forms.Button();
             this.textBoxFilter = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -96,11 +96,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).BeginInit();
             this.tabPageTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistory)).BeginInit();
+            this.tabPageEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.tabPageEdit.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -349,17 +349,17 @@
             // 
             // chartCurrent
             // 
-            chartArea7.Name = "ChartArea1";
-            this.chartCurrent.ChartAreas.Add(chartArea7);
+            chartArea4.Name = "ChartArea1";
+            this.chartCurrent.ChartAreas.Add(chartArea4);
             this.chartCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend7.Name = "Legend1";
-            this.chartCurrent.Legends.Add(legend7);
+            legend4.Name = "Legend1";
+            this.chartCurrent.Legends.Add(legend4);
             this.chartCurrent.Location = new System.Drawing.Point(3, 3);
             this.chartCurrent.Name = "chartCurrent";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.chartCurrent.Series.Add(series7);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chartCurrent.Series.Add(series4);
             this.chartCurrent.Size = new System.Drawing.Size(502, 331);
             this.chartCurrent.TabIndex = 3;
             this.chartCurrent.Text = "chart1";
@@ -377,17 +377,17 @@
             // 
             // chartHourly
             // 
-            chartArea8.Name = "ChartArea1";
-            this.chartHourly.ChartAreas.Add(chartArea8);
+            chartArea5.Name = "ChartArea1";
+            this.chartHourly.ChartAreas.Add(chartArea5);
             this.chartHourly.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend8.Name = "Legend1";
-            this.chartHourly.Legends.Add(legend8);
+            legend5.Name = "Legend1";
+            this.chartHourly.Legends.Add(legend5);
             this.chartHourly.Location = new System.Drawing.Point(3, 3);
             this.chartHourly.Name = "chartHourly";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.chartHourly.Series.Add(series8);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chartHourly.Series.Add(series5);
             this.chartHourly.Size = new System.Drawing.Size(502, 331);
             this.chartHourly.TabIndex = 4;
             this.chartHourly.Text = "chart1";
@@ -404,17 +404,17 @@
             // 
             // chartDaily
             // 
-            chartArea9.Name = "ChartArea1";
-            this.chartDaily.ChartAreas.Add(chartArea9);
+            chartArea6.Name = "ChartArea1";
+            this.chartDaily.ChartAreas.Add(chartArea6);
             this.chartDaily.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend9.Name = "Legend1";
-            this.chartDaily.Legends.Add(legend9);
+            legend6.Name = "Legend1";
+            this.chartDaily.Legends.Add(legend6);
             this.chartDaily.Location = new System.Drawing.Point(0, 0);
             this.chartDaily.Name = "chartDaily";
-            series9.ChartArea = "ChartArea1";
-            series9.Legend = "Legend1";
-            series9.Name = "Series1";
-            this.chartDaily.Series.Add(series9);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chartDaily.Series.Add(series6);
             this.chartDaily.Size = new System.Drawing.Size(508, 337);
             this.chartDaily.TabIndex = 4;
             this.chartDaily.Text = "chart1";
@@ -483,34 +483,6 @@
             this.ColumnAggregation.ReadOnly = true;
             this.ColumnAggregation.Width = 80;
             // 
-            // flowLayoutPanelOverview
-            // 
-            this.flowLayoutPanelOverview.AutoScroll = true;
-            this.flowLayoutPanelOverview.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanelOverview.Location = new System.Drawing.Point(0, 26);
-            this.flowLayoutPanelOverview.Name = "flowLayoutPanelOverview";
-            this.flowLayoutPanelOverview.Size = new System.Drawing.Size(225, 491);
-            this.flowLayoutPanelOverview.TabIndex = 0;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.textBoxFilter);
-            this.splitContainer2.Panel1.Controls.Add(this.flowLayoutPanelOverview);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainer2.Size = new System.Drawing.Size(745, 517);
-            this.splitContainer2.SplitterDistance = 225;
-            this.splitContainer2.TabIndex = 5;
-            // 
             // tabPageEdit
             // 
             this.tabPageEdit.Controls.Add(this.buttonSave);
@@ -526,14 +498,30 @@
             this.tabPageEdit.Text = "Edit";
             this.tabPageEdit.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // buttonSave
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Common name";
+            this.buttonSave.Location = new System.Drawing.Point(6, 62);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(203, 23);
+            this.buttonSave.TabIndex = 4;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // comboBoxType
+            // 
+            this.comboBoxType.FormattingEnabled = true;
+            this.comboBoxType.Location = new System.Drawing.Point(89, 34);
+            this.comboBoxType.Name = "comboBoxType";
+            this.comboBoxType.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxType.TabIndex = 3;
+            // 
+            // textBoxCommonName
+            // 
+            this.textBoxCommonName.Location = new System.Drawing.Point(89, 7);
+            this.textBoxCommonName.Name = "textBoxCommonName";
+            this.textBoxCommonName.Size = new System.Drawing.Size(122, 20);
+            this.textBoxCommonName.TabIndex = 2;
             // 
             // label2
             // 
@@ -544,30 +532,43 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Type";
             // 
-            // textBoxCommonName
+            // label1
             // 
-            this.textBoxCommonName.Location = new System.Drawing.Point(89, 7);
-            this.textBoxCommonName.Name = "textBoxCommonName";
-            this.textBoxCommonName.Size = new System.Drawing.Size(122, 20);
-            this.textBoxCommonName.TabIndex = 2;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Common name";
             // 
-            // comboBoxType
+            // flowLayoutPanelOverview
             // 
-            this.comboBoxType.FormattingEnabled = true;
-            this.comboBoxType.Location = new System.Drawing.Point(89, 34);
-            this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxType.TabIndex = 3;
+            this.flowLayoutPanelOverview.AutoScroll = true;
+            this.flowLayoutPanelOverview.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.flowLayoutPanelOverview.Location = new System.Drawing.Point(0, 20);
+            this.flowLayoutPanelOverview.Name = "flowLayoutPanelOverview";
+            this.flowLayoutPanelOverview.Size = new System.Drawing.Size(225, 497);
+            this.flowLayoutPanelOverview.TabIndex = 0;
             // 
-            // buttonSave
+            // splitContainer2
             // 
-            this.buttonSave.Location = new System.Drawing.Point(6, 62);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(203, 23);
-            this.buttonSave.TabIndex = 4;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.textBoxFilter);
+            this.splitContainer2.Panel1.Controls.Add(this.flowLayoutPanelOverview);
+            this.splitContainer2.Panel1.Resize += new System.EventHandler(this.splitContainer2_Panel1_Resize);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
+            this.splitContainer2.Size = new System.Drawing.Size(745, 517);
+            this.splitContainer2.SplitterDistance = 225;
+            this.splitContainer2.TabIndex = 5;
             // 
             // textBoxFilter
             // 
@@ -601,13 +602,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).EndInit();
             this.tabPageTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistory)).EndInit();
+            this.tabPageEdit.ResumeLayout(false);
+            this.tabPageEdit.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.tabPageEdit.ResumeLayout(false);
-            this.tabPageEdit.PerformLayout();
             this.ResumeLayout(false);
 
         }

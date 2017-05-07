@@ -445,5 +445,10 @@ namespace DashboardClient
         {
             UpdateOverviewPanel();
         }
+
+        private void splitContainer2_Panel1_Resize(object sender, EventArgs e)
+        {
+            flowLayoutPanelOverview.Height = splitContainer2.Panel1.Height - 20;
+        }
     }
 }
