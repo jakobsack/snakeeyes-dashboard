@@ -129,6 +129,7 @@ namespace DashboardServer
             {
                 Probes[probe.Id].LastState = probe.LastState;
                 Probes[probe.Id].LastTimestamp = probe.LastTimestamp;
+                Probes[probe.Id].LastMessage = probe.LastMessage;
                 Probes[probe.Id].LastValue = probe.LastValue;
                 Probes[probe.Id].MaxValue = probe.MaxValue;
                 Probes[probe.Id].MinValue = probe.MinValue;

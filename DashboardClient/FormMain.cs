@@ -129,11 +129,10 @@ namespace DashboardClient
             labelLastTimestamp.Text = data.LastTimestamp.ToString();
             labelLastState.Text = data.LastState.ToString();
             labelHistoryItems.Text = data.History.Count.ToString();
-            labelLastMessage.Text = "";
+            labelLastMessage.Text = data.LastMessage;
 
             textBoxCommonName.Text = probe.TryCommonName();
             comboBoxType.SelectedItem = probe.SizeType;
-
 
             if (data.History.Count == 0)
             {

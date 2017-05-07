@@ -90,7 +90,7 @@ namespace DashboardLib
                 Name = traceNode.SelectSingleNode("Source").InnerText,
                 LastState = type,
                 LastTimestamp = DateTime.Parse(traceNode.SelectSingleNode("Timestamp").InnerText),
-                LastMessage = traceNode.SelectSingleNode("Message").InnerText,
+                LastMessage = traceNode.SelectSingleNode("Message").InnerText
             };
 
             if (traceNode.SelectSingleNode("Value") != null && traceNode.SelectSingleNode("Value").InnerText.Trim() != "")

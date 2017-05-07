@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.labelTextLastUpdate = new System.Windows.Forms.Label();
@@ -138,7 +138,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControlCharts);
-            this.splitContainer1.Size = new System.Drawing.Size(516, 517);
+            this.splitContainer1.Size = new System.Drawing.Size(514, 517);
             this.splitContainer1.SplitterDistance = 150;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -333,7 +333,7 @@
             this.tabControlCharts.Location = new System.Drawing.Point(0, 0);
             this.tabControlCharts.Name = "tabControlCharts";
             this.tabControlCharts.SelectedIndex = 0;
-            this.tabControlCharts.Size = new System.Drawing.Size(516, 363);
+            this.tabControlCharts.Size = new System.Drawing.Size(514, 363);
             this.tabControlCharts.TabIndex = 3;
             // 
             // tabPageCurrent
@@ -342,25 +342,25 @@
             this.tabPageCurrent.Location = new System.Drawing.Point(4, 22);
             this.tabPageCurrent.Name = "tabPageCurrent";
             this.tabPageCurrent.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCurrent.Size = new System.Drawing.Size(508, 337);
+            this.tabPageCurrent.Size = new System.Drawing.Size(506, 337);
             this.tabPageCurrent.TabIndex = 0;
             this.tabPageCurrent.Text = "Current";
             this.tabPageCurrent.UseVisualStyleBackColor = true;
             // 
             // chartCurrent
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartCurrent.ChartAreas.Add(chartArea4);
+            chartArea1.Name = "ChartArea1";
+            this.chartCurrent.ChartAreas.Add(chartArea1);
             this.chartCurrent.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chartCurrent.Legends.Add(legend4);
+            legend1.Name = "Legend1";
+            this.chartCurrent.Legends.Add(legend1);
             this.chartCurrent.Location = new System.Drawing.Point(3, 3);
             this.chartCurrent.Name = "chartCurrent";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chartCurrent.Series.Add(series4);
-            this.chartCurrent.Size = new System.Drawing.Size(502, 331);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartCurrent.Series.Add(series1);
+            this.chartCurrent.Size = new System.Drawing.Size(500, 331);
             this.chartCurrent.TabIndex = 3;
             this.chartCurrent.Text = "chart1";
             // 
@@ -377,17 +377,17 @@
             // 
             // chartHourly
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chartHourly.ChartAreas.Add(chartArea5);
+            chartArea2.Name = "ChartArea1";
+            this.chartHourly.ChartAreas.Add(chartArea2);
             this.chartHourly.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Name = "Legend1";
-            this.chartHourly.Legends.Add(legend5);
+            legend2.Name = "Legend1";
+            this.chartHourly.Legends.Add(legend2);
             this.chartHourly.Location = new System.Drawing.Point(3, 3);
             this.chartHourly.Name = "chartHourly";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chartHourly.Series.Add(series5);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartHourly.Series.Add(series2);
             this.chartHourly.Size = new System.Drawing.Size(502, 331);
             this.chartHourly.TabIndex = 4;
             this.chartHourly.Text = "chart1";
@@ -404,17 +404,17 @@
             // 
             // chartDaily
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chartDaily.ChartAreas.Add(chartArea6);
+            chartArea3.Name = "ChartArea1";
+            this.chartDaily.ChartAreas.Add(chartArea3);
             this.chartDaily.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend6.Name = "Legend1";
-            this.chartDaily.Legends.Add(legend6);
+            legend3.Name = "Legend1";
+            this.chartDaily.Legends.Add(legend3);
             this.chartDaily.Location = new System.Drawing.Point(0, 0);
             this.chartDaily.Name = "chartDaily";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chartDaily.Series.Add(series6);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chartDaily.Series.Add(series3);
             this.chartDaily.Size = new System.Drawing.Size(508, 337);
             this.chartDaily.TabIndex = 4;
             this.chartDaily.Text = "chart1";
@@ -566,7 +566,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainer2.Size = new System.Drawing.Size(745, 517);
+            this.splitContainer2.Size = new System.Drawing.Size(743, 517);
             this.splitContainer2.SplitterDistance = 225;
             this.splitContainer2.TabIndex = 5;
             // 
@@ -583,7 +583,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(745, 517);
+            this.ClientSize = new System.Drawing.Size(743, 517);
             this.Controls.Add(this.splitContainer2);
             this.Name = "FormMain";
             this.Text = "Snakeeyes Dashboard";
