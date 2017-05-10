@@ -203,15 +203,106 @@ namespace DashboardClient
 
         private void AddChart(Chart chart, IEnumerable<HistoryItem> items, string name)
         {
+            int interval = 3;
+            DateTimeIntervalType intervalType = DateTimeIntervalType.Months;
+            string labelFormat = "dd.MM.yyyy";
+
+            if (items.Count() > 1)
+            {
+                TimeSpan a = (items.Last().Timestamp - items.First().Timestamp);
+                if (a.TotalMinutes < 5)
+                {
+                    intervalType = DateTimeIntervalType.Minutes;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalMinutes < 40)
+                {
+                    interval = 5;
+                    intervalType = DateTimeIntervalType.Minutes;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalHours < 2)
+                {
+                    interval = 15;
+                    intervalType = DateTimeIntervalType.Minutes;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalHours < 4)
+                {
+                    interval = 30;
+                    intervalType = DateTimeIntervalType.Minutes;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalHours < 8)
+                {
+                    interval = 1;
+                    intervalType = DateTimeIntervalType.Hours;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalHours < 16)
+                {
+                    interval = 2;
+                    intervalType = DateTimeIntervalType.Hours;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalHours < 32)
+                {
+                    interval = 4;
+                    intervalType = DateTimeIntervalType.Hours;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalHours < 48)
+                {
+                    interval = 6;
+                    intervalType = DateTimeIntervalType.Hours;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalHours < 96)
+                {
+                    interval = 12;
+                    intervalType = DateTimeIntervalType.Hours;
+                    labelFormat = "dd.MM.yyyy hh:mm";
+                }
+                else if (a.TotalDays < 8)
+                {
+                    interval = 1;
+                    intervalType = DateTimeIntervalType.Days;
+                }
+                else if (a.TotalDays < 16)
+                {
+                    interval = 2;
+                    intervalType = DateTimeIntervalType.Days;
+                }
+                else if (a.TotalDays < 31)
+                {
+                    interval = 5;
+                    intervalType = DateTimeIntervalType.Days;
+                }
+                else if (a.TotalDays < 248)
+                {
+                    interval = 1;
+                    intervalType = DateTimeIntervalType.Months;
+                }
+                else if (a.TotalDays < 496)
+                {
+                    interval = 2;
+                    intervalType = DateTimeIntervalType.Months;
+                }
+            }
+
             // Step 1: ChartArea
             Axis axisX = new Axis
             {
-                Interval = 1
+                Interval = interval,
+                IntervalType = intervalType,
+                LabelAutoFitStyle = LabelAutoFitStyles.LabelsAngleStep30,
+                LineColor = Color.LightGray
             };
             Axis axisY = new Axis
             {
                 Minimum = 0
             };
+            axisX.LabelStyle.Format = labelFormat;
 
             ChartArea chartArea = new ChartArea
             {
