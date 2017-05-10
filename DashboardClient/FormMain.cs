@@ -303,7 +303,7 @@ namespace DashboardClient
             ClearOverview();
 
             string lastMachine = "";
-            foreach (Probe probe in Probes.Where(x => (x.Id + x.CommonName).Contains(textBoxFilter.Text)))
+            foreach (Probe probe in Probes.Where(x => (x.Id + x.CommonName).ToLower().Contains(textBoxFilter.Text.ToLower())))
             {
                 if (probe.LastState >= TraceEventType.Information && probe.Machine != lastMachine)
                 {
